@@ -1,10 +1,11 @@
 "use client"
 
+import Image from "next/image"
 import { motion } from "framer-motion"
 
 export default function HolographicAvatar() {
   return (
-    <div className="relative w-32 h-32 mx-auto mb-8">
+    <div className="relative w-40 h-40 mx-auto mb-8">
       {/* Holographic Ring */}
       <motion.div
         animate={{ rotate: 360 }}
@@ -23,12 +24,16 @@ export default function HolographicAvatar() {
       <motion.div
         animate={{ y: [-5, 5, -5] }}
         transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-        className="absolute inset-4 rounded-full glass-morphism flex items-center justify-center overflow-hidden"
+        className="absolute inset-3 rounded-full overflow-hidden border-2 border-white/20 shadow-lg shadow-cyan-400/20"
       >
-        {/* Placeholder Avatar - Replace with actual image */}
-        <div className="w-full h-full bg-gradient-to-br from-cyan-400/20 to-purple-400/20 rounded-full flex items-center justify-center">
-          <div className="text-4xl">👨‍💻</div>
-        </div>
+        <Image
+          src="/avatar.png"
+          alt="Justin Boatman"
+          fill
+          sizes="160px"
+          className="object-cover object-top"
+          priority
+        />
       </motion.div>
 
       {/* Glow Effect */}

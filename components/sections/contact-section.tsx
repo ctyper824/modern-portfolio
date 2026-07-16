@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Send, Mic, MicOff } from "lucide-react"
+import { Send, Mic, MicOff, Mail, Phone, MapPin } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 export default function ContactSection() {
@@ -58,78 +58,116 @@ export default function ContactSection() {
           </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="max-w-2xl mx-auto"
-        >
-          <Card className="glass-morphism border-white/20">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">💬 Send a Message</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <Input
-                    placeholder="Your Name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="glass-morphism border-white/20 text-white placeholder:text-white/50"
-                    required
-                  />
-                </div>
+        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            <Card className="glass-morphism border-white/20">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">💬 Send a Message</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <Input
+                      placeholder="Your Name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="glass-morphism border-white/20 text-white placeholder:text-white/50"
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <Input
-                    type="email"
-                    placeholder="Your Email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="glass-morphism border-white/20 text-white placeholder:text-white/50"
-                    required
-                  />
-                </div>
+                  <div>
+                    <Input
+                      type="email"
+                      placeholder="Your Email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="glass-morphism border-white/20 text-white placeholder:text-white/50"
+                      required
+                    />
+                  </div>
 
-                <div className="relative">
-                  <Textarea
-                    placeholder="Your Message"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="glass-morphism border-white/20 text-white placeholder:text-white/50 min-h-32"
-                    required
-                  />
+                  <div className="relative">
+                    <Textarea
+                      placeholder="Your Message"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="glass-morphism border-white/20 text-white placeholder:text-white/50 min-h-32"
+                      required
+                    />
+
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={toggleRecording}
+                      className={`absolute top-2 right-2 ${
+                        isRecording ? "text-red-400 animate-pulse" : "text-white/60"
+                      }`}
+                    >
+                      {isRecording ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
+                    </Button>
+                  </div>
 
                   <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={toggleRecording}
-                    className={`absolute top-2 right-2 ${
-                      isRecording ? "text-red-400 animate-pulse" : "text-white/60"
-                    }`}
+                    type="submit"
+                    className="w-full glass-morphism border-cyan-400 text-cyan-400 hover:bg-cyan-400/20 hover:animate-glow"
+                    size="lg"
                   >
-                    {isRecording ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
+                    <Send className="mr-2 h-5 w-5" />
+                    Send Message
                   </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            <Card className="glass-morphism border-white/20 h-full">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">📞 Get in Touch</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex items-start gap-3">
+                  <Mail className="h-5 w-5 text-cyan-400 mt-0.5 shrink-0" />
+                  <a
+                    href="mailto:siapayah2375@gmail.com"
+                    className="text-white/80 hover:text-cyan-400 transition-colors break-all"
+                  >
+                    siapayah2375@gmail.com
+                  </a>
                 </div>
 
-                <Button
-                  type="submit"
-                  className="w-full glass-morphism border-cyan-400 text-cyan-400 hover:bg-cyan-400/20 hover:animate-glow"
-                  size="lg"
-                >
-                  <Send className="mr-2 h-5 w-5" />
-                  Send Message
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </motion.div>
+                <div className="flex items-start gap-3">
+                  <Phone className="h-5 w-5 text-green-400 mt-0.5 shrink-0" />
+                  <a href="tel:+6281392745186" className="text-white/80 hover:text-green-400 transition-colors">
+                    +62 813-9274-5186
+                  </a>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <MapPin className="h-5 w-5 text-purple-400 mt-0.5 shrink-0" />
+                  <span className="text-white/80">
+                    Jembatan, Sindangbarang, Bogor Barat, Kota Bogor, Jawa Barat, Indonesia
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
 
         <motion.footer
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
           className="mt-20 pt-8 border-t border-white/10 text-center"
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
