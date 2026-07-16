@@ -31,7 +31,7 @@ export default function HolographicAvatar() {
           alt="Justin Boatman"
           fill
           sizes="160px"
-          className="object-cover object-top"
+          className="object-cover object-[58%_18%] scale-110"
           priority
         />
       </motion.div>
