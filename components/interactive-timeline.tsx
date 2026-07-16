@@ -1,0 +1,200 @@
+"use client"
+
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Calendar, Briefcase } from "lucide-react"
+
+const timelineData = [
+  {
+    id: 1,
+    year: "05/2026 – Present",
+    title: "ClickSoftware Engineer",
+    company: "Apps IT America LLC",
+    description:
+      "Designing and delivering Click Software solutions that optimize field service operations and enterprise integrations.",
+    technologies: ["ClickSchedule", "ClickMobile", "ClickOptimize", "REST APIs", "Java", "JavaScript"],
+    achievements: [
+      "Building and customizing Click Software configurations for field service management",
+      "Integrating Click platforms with enterprise ERP and CRM systems",
+      "Developing rules, scripts, and optimizations to improve workforce planning",
+    ],
+  },
+  {
+    id: 2,
+    year: "06/2020 – 04/2026",
+    title: "Lead Software Engineer",
+    company: "Accenture",
+    description:
+      "Led design and development of customized Click Software solutions to streamline scheduling, mobile field access, and enterprise integrations.",
+    technologies: ["ClickSchedule", "ClickMobile", "ClickOptimize", "REST APIs", "ERP", "CRM"],
+    achievements: [
+      "Designed customized ClickSchedule solutions resulting in a 30% reduction in scheduling conflicts",
+      "Configured ClickMobile for field technicians, improving service response times by 25%",
+      "Built Click Software–ERP integrations via REST APIs, improving operational efficiency by 15%",
+      "Developed ClickOptimize rules and scripts achieving a 20% increase in resource utilization",
+      "Tuned and troubleshot Click environments, reducing system downtime by 40%",
+      "Translated business requirements into technical specifications for Click configurations",
+      "Provided production support with a 95% customer satisfaction rate",
+    ],
+  },
+  {
+    id: 3,
+    year: "03/2017 – 05/2020",
+    title: "Senior Software Engineer",
+    company: "SystemSeven",
+    description:
+      "Developed and customized Click Software platforms to improve scheduling accuracy, mobile CRM access, and dispatch optimization.",
+    technologies: ["ClickSchedule", "ClickMobile", "ClickOptimize", "CRM", "Java", "JavaScript"],
+    achievements: [
+      "Customized ClickSchedule functionalities with a 35% improvement in scheduling accuracy",
+      "Integrated ClickMobile with CRM systems, increasing customer engagement by 30%",
+      "Maintained ClickOptimize configurations reducing response times by 25%",
+      "Proposed technical solutions that improved workforce optimization metrics by 20%",
+      "Supported system upgrades and patches with minimal disruption to field operations",
+      "Collaborated with project managers and analysts to align solutions with business objectives",
+      "Documented technical specifications and user guides for knowledge transfer",
+    ],
+  },
+  {
+    id: 4,
+    year: "06/2013 – 02/2017",
+    title: "Software Engineer",
+    company: "APN Healthcare Solutions",
+    description:
+      "Implemented Click Software configurations and integrations to optimize scheduling workflows and field service delivery.",
+    technologies: ["ClickSchedule", "ClickMobile", "ClickOptimize", "SQL Server", "Java"],
+    achievements: [
+      "Implemented ClickSchedule configurations achieving a 30% increase in operational efficiency",
+      "Integrated ClickMobile with SQL Server for real-time updates, improving accuracy by 20%",
+      "Created ClickOptimize scripts reducing operational costs by 15%",
+      "Translated business requirements into technical specifications for Click Software",
+      "Identified and fixed performance bottlenecks, improving responsiveness by 25%",
+      "Supported feature deployments with cross-functional teams for successful adoption",
+      "Maintained technical documentation for configurations and integrations",
+    ],
+  },
+]
+
+export default function InteractiveTimeline() {
+  const [selectedItem, setSelectedItem] = useState<number | null>(null)
+
+  return (
+    <div className="relative">
+      {/* Timeline Line */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-cyan-400 to-purple-400 rounded-full" />
+
+      <div className="space-y-12">
+        {timelineData.map((item, index) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2, duration: 0.6 }}
+            className={`flex items-center ${index % 2 === 0 ? "flex-row" : "flex-row-reverse"}`}
+          >
+            {/* Content Card */}
+            <div className={`w-5/12 ${index % 2 === 0 ? "pr-8" : "pl-8"}`}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                onClick={() => setSelectedItem(selectedItem === item.id ? null : item.id)}
+                className="cursor-pointer"
+              >
+                <Card className="glass-morphism border-white/20 hover:border-cyan-400/50 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Calendar className="h-4 w-4 text-cyan-400" />
+                      <span className="text-cyan-400 font-semibold">{item.year}</span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+
+                    <div className="flex items-center gap-2 mb-4">
+                      <Briefcase className="h-4 w-4 text-purple-400" />
+                      <span className="text-white/80">{item.company}</span>
+                    </div>
+
+                    <p className="text-white/70 mb-4">{item.description}</p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {item.technologies.map((tech) => (
+                        <Badge key={tech} variant="secondary" className="bg-white/10 text-white">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+
+            {/* Timeline Node */}
+            <div className="relative z-10">
+              <motion.div
+                whileHover={{ scale: 1.2 }}
+                className="w-6 h-6 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full border-4 border-black shadow-lg"
+              />
+            </div>
+
+            {/* Spacer */}
+            <div className="w-5/12" />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Expanded Details Modal */}
+      <AnimatePresence>
+        {selectedItem && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedItem(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="glass-morphism rounded-lg p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+            >
+              {(() => {
+                const item = timelineData.find((i) => i.id === selectedItem)
+                if (!item) return null
+
+                return (
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
+                    <p className="text-cyan-400 mb-2">{item.company}</p>
+                    <p className="text-white/60 mb-4">{item.year}</p>
+                    <p className="text-white/80 mb-6">{item.description}</p>
+
+                    <h4 className="text-lg font-semibold text-cyan-400 mb-3">Key Achievements:</h4>
+                    <ul className="space-y-2 mb-6">
+                      {item.achievements.map((achievement, i) => (
+                        <li key={i} className="text-white/70 flex items-start">
+                          <span className="w-2 h-2 bg-purple-400 rounded-full mr-3 mt-2 shrink-0" />
+                          {achievement}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="flex flex-wrap gap-2">
+                      {item.technologies.map((tech) => (
+                        <Badge key={tech} variant="secondary" className="bg-white/10 text-white">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })()}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
